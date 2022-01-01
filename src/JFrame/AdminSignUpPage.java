@@ -2,7 +2,7 @@ package JFrame;
 import java.sql.*;
 import javax.swing.*;
 
-public class SingnupPage extends javax.swing.JFrame {
+public class AdminSignUpPage extends javax.swing.JFrame {
     
     private String name;
     private String password;
@@ -10,7 +10,7 @@ public class SingnupPage extends javax.swing.JFrame {
     private String email;
     
     
-    public SingnupPage() {
+    public AdminSignUpPage() {
         initComponents();
     }
     
@@ -35,7 +35,7 @@ public class SingnupPage extends javax.swing.JFrame {
            
            if(updateRowCount>0){
                JOptionPane.showMessageDialog(this,"Done");
-               LoginPage loginPage=new LoginPage();
+               AdminLoginPage loginPage=new AdminLoginPage();
                loginPage.setVisible(true);
                dispose();
            }else{
@@ -269,18 +269,18 @@ public class SingnupPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void rSButtonHover2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover2ActionPerformed
-        LoginPage loginPage= new LoginPage();
+        AdminLoginPage loginPage= new AdminLoginPage();
                 loginPage.setVisible(true);
                 this.dispose();
     }//GEN-LAST:event_rSButtonHover2ActionPerformed
 
     private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
         if(validationSignup()==true){
-            if(duplicateUserNameChecker()==false){
+            if(duplicateUserNameChecker()==false||duplicateEmailChecker()==false){
                 insertSingupDetails();
             }
             else{
-                JOptionPane.showMessageDialog(this,"Username already exist");
+                JOptionPane.showMessageDialog(this,"Already exist");
             }
         }
     }//GEN-LAST:event_rSButtonHover3ActionPerformed
@@ -314,20 +314,21 @@ public class SingnupPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminSignUpPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminSignUpPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminSignUpPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SingnupPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminSignUpPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SingnupPage().setVisible(true);
+                new AdminSignUpPage().setVisible(true);
             }
         });
     }

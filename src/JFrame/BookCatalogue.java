@@ -1,28 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package JFrame;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
-
-
-/**
- *
- * @author light
- */
 public class BookCatalogue extends javax.swing.JFrame {
 
-    /**
-     * Creates new form BookCatalogue
-     */
+
+    private String title, author, edition, language, publisher, series;
+    private int ID,year,pages, isbn, quantity;
+    
+    DefaultTableModel model;//creating a model which will be representing the calalogue table
     
     public BookCatalogue() {
+        
         initComponents();
+        bookCatalogueTable1.setAutoCreateRowSorter(true);
+        catalogue();
     }
-   
+ 
+    public void catalogue(){
+        
+        try{
+            Connection connection = DatabaseConnectionClass.getConnection();
+            Statement st=connection.createStatement();
+            ResultSet resultSet=st.executeQuery("select * from bookdetails");
+            
+            while (resultSet.next()){
+                String bookID=resultSet.getString("ID");
+                String author=resultSet.getString("author");
+                String title=resultSet.getString("title");
+                String edition=resultSet.getString("edition");
+                String language=resultSet.getString("language");
+                String publisher=resultSet.getString("publisher");
+                int year=resultSet.getInt("year");
+                int pages=resultSet.getInt("pages");
+                String series=resultSet.getString("series");
+                int isbn=resultSet.getInt("isbn");
+                int quantity=resultSet.getInt("quantity");
+                
+                Object[] obj={bookID,author,title,edition,language,publisher,year,pages,series,isbn,quantity};
+                
+                model =(DefaultTableModel)bookCatalogueTable1.getModel(); // using this model object to insert data inside the row
+                model.addRow(obj); 
+                
+            }
+            
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
     
-    
-
+        public void search(String string){
+        model=(DefaultTableModel) bookCatalogueTable1.getModel();
+        TableRowSorter<DefaultTableModel> trs=new TableRowSorter<>(model);
+        bookCatalogueTable1.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter("(?i)"+string));
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,7 +69,8 @@ public class BookCatalogue extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        bookCatalogueTable1 = new javax.swing.JTable();
+        txtSearchBooks = new app.bolivia.swing.JCTextField();
 
         tbl_bookDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,49 +99,59 @@ public class BookCatalogue extends javax.swing.JFrame {
         jLabel1.setText("Book Catalogue");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(102, 102, 102));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        bookCatalogueTable1.setAutoCreateRowSorter(true);
+        bookCatalogueTable1.setBackground(new java.awt.Color(255, 255, 255));
+        bookCatalogueTable1.setForeground(new java.awt.Color(102, 102, 102));
+        bookCatalogueTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "What does it all mean? A Very Short Introduction to Philosophy by Thomas Nagel", "What does it all mean? A Very Short Introduction to Philosophy ", "10th", "USA", "Thomas", "1987", "500", "none", "6040", null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Author", "Title", "Edition", "Place of Publication", "Publisher", "Year", "Pages", "Series", "ISBN", "Quantity"
+                "ID", "Author", "Title", "Edition", "Language", "Publisher", "Year", "Pages", "Series", "ISBN", "Quantity"
             }
-        ));
-        jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setSelectionForeground(new java.awt.Color(51, 51, 51));
-        jTable1.setShowGrid(true);
-        jTable1.setShowVerticalLines(true);
-        jScrollPane3.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("ID");
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Author");
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Title");
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Edition");
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("Place of Publication");
-            jTable1.getColumnModel().getColumn(5).setHeaderValue("Publisher");
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(15);
-            jTable1.getColumnModel().getColumn(6).setHeaderValue("Year");
-            jTable1.getColumnModel().getColumn(7).setPreferredWidth(15);
-            jTable1.getColumnModel().getColumn(7).setHeaderValue("Pages");
-            jTable1.getColumnModel().getColumn(8).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(8).setHeaderValue("Series");
-            jTable1.getColumnModel().getColumn(9).setPreferredWidth(15);
-            jTable1.getColumnModel().getColumn(9).setHeaderValue("ISBN");
-            jTable1.getColumnModel().getColumn(10).setPreferredWidth(15);
-            jTable1.getColumnModel().getColumn(10).setHeaderValue("Quantity");
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        bookCatalogueTable1.setDragEnabled(true);
+        bookCatalogueTable1.setEnabled(false);
+        bookCatalogueTable1.setRequestFocusEnabled(false);
+        bookCatalogueTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        bookCatalogueTable1.setSelectionForeground(new java.awt.Color(51, 51, 51));
+        bookCatalogueTable1.setShowGrid(true);
+        bookCatalogueTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bookCatalogueTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(bookCatalogueTable1);
+        if (bookCatalogueTable1.getColumnModel().getColumnCount() > 0) {
+            bookCatalogueTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+            bookCatalogueTable1.getColumnModel().getColumn(1).setPreferredWidth(70);
+            bookCatalogueTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
+            bookCatalogueTable1.getColumnModel().getColumn(3).setPreferredWidth(20);
+            bookCatalogueTable1.getColumnModel().getColumn(4).setPreferredWidth(20);
+            bookCatalogueTable1.getColumnModel().getColumn(6).setPreferredWidth(15);
+            bookCatalogueTable1.getColumnModel().getColumn(7).setPreferredWidth(15);
+            bookCatalogueTable1.getColumnModel().getColumn(8).setPreferredWidth(20);
+            bookCatalogueTable1.getColumnModel().getColumn(9).setPreferredWidth(15);
+            bookCatalogueTable1.getColumnModel().getColumn(10).setPreferredWidth(15);
         }
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 960, -1));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 960, -1));
+
+        txtSearchBooks.setPlaceholder("Search Books");
+        txtSearchBooks.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchBooksKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtSearchBooks, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,15 +168,19 @@ public class BookCatalogue extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bookCatalogueTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookCatalogueTable1MouseClicked
+        
+    }//GEN-LAST:event_bookCatalogueTable1MouseClicked
+
+    private void txtSearchBooksKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchBooksKeyReleased
+        String searchString=txtSearchBooks.getText().toLowerCase();
+        search(searchString);
+    }//GEN-LAST:event_txtSearchBooksKeyReleased
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -156,19 +208,13 @@ public class BookCatalogue extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable bookCatalogueTable1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private rojeru_san.complementos.RSTableMetro tbl_bookDetails;
+    private app.bolivia.swing.JCTextField txtSearchBooks;
     // End of variables declaration//GEN-END:variables
 
-    private void CeateColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void sort() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

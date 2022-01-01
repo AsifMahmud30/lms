@@ -1,22 +1,25 @@
 package JFrame;
 import java.sql.*;
 import javax.swing.*;
-public class LoginPage extends javax.swing.JFrame{
+public class StudentLoginPage extends javax.swing.JFrame{
     
-      private String userName;
+      public String studentID;
       private String password;
+
     
-    public LoginPage() {
+    public StudentLoginPage() {
+        
         initComponents();
+       
     }
  
     //validation
     public boolean validationLogin(){
-        userName=txtUsername.getText();
-        password=txtPassword.getText();
+        studentID=txtStudentID.getText();
+        password=txtStudentPassword.getText();
         
-        if(userName.equals("")){
-            JOptionPane.showMessageDialog(this, "Please enter username");
+        if(studentID.equals("")){
+            JOptionPane.showMessageDialog(this, "Please enter your ID");
             return false;
         }
         if(password.equals("")){
@@ -28,14 +31,14 @@ public class LoginPage extends javax.swing.JFrame{
     
     //credential verification
     public void login(){
-        userName=txtUsername.getText();
-        password=txtPassword.getText();
+        studentID=txtStudentID.getText();
+        password=txtStudentPassword.getText();
         
         try{
             Connection connection = DatabaseConnectionClass.getConnection();
-            PreparedStatement statement= connection.prepareStatement("select * from users where userName=? and password=?");
+            PreparedStatement statement= connection.prepareStatement("select * from students where studentID=? and password=?");
             
-            statement.setString(1,userName);
+            statement.setString(1,studentID);
             statement.setString(2, password);
             
             ResultSet resultSet= statement.executeQuery();
@@ -48,13 +51,23 @@ public class LoginPage extends javax.swing.JFrame{
                 this.dispose();
             }
             else{
-                JOptionPane.showMessageDialog(this, "Incorrect username or passowrd");
+                JOptionPane.showMessageDialog(this, "Incorrect studentID or passowrd");
             }
         }
         catch(Exception e){
             System.out.println(e);
         }
+  
     }
+    
+    public String getID(){
+        
+        String v="kala jahangir";
+        
+        return v;
+    }
+
+
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,13 +80,13 @@ public class LoginPage extends javax.swing.JFrame{
 
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        studentLoginIcon = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtUsername = new app.bolivia.swing.JCTextField();
-        txtPassword = new app.bolivia.swing.JCTextField();
-        rSButtonHover2 = new rojeru_san.complementos.RSButtonHover();
+        txtStudentID = new app.bolivia.swing.JCTextField();
+        txtStudentPassword = new app.bolivia.swing.JCTextField();
+        studentLoginButton = new rojeru_san.complementos.RSButtonHover();
         jLabel7 = new javax.swing.JLabel();
-        rSButtonHover3 = new rojeru_san.complementos.RSButtonHover();
+        studentSignupButton = new rojeru_san.complementos.RSButtonHover();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
@@ -91,55 +104,55 @@ public class LoginPage extends javax.swing.JFrame{
         jLabel3.setText("Library Managemnet System");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons/login.library-concept-students-coworking-space-vector-27466179.jpg"))); // NOI18N
-        jLabel5.setText("jLabel5");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 490, 600));
+        studentLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons/login.library-concept-students-coworking-space-vector-27466179.jpg"))); // NOI18N
+        studentLoginIcon.setText("jLabel5");
+        jPanel2.add(studentLoginIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 490, 600));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Don't have an account?");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 210, 30));
 
-        txtUsername.setBackground(new java.awt.Color(255, 255, 255));
-        txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(99, 166, 211)));
-        txtUsername.setForeground(new java.awt.Color(102, 102, 102));
-        txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtUsername.setPlaceholder("Username");
-        txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtStudentID.setBackground(new java.awt.Color(255, 255, 255));
+        txtStudentID.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(99, 166, 211)));
+        txtStudentID.setForeground(new java.awt.Color(102, 102, 102));
+        txtStudentID.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtStudentID.setPlaceholder("Student ID");
+        txtStudentID.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtUsernameFocusLost(evt);
+                txtStudentIDFocusLost(evt);
             }
         });
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+        txtStudentID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
+                txtStudentIDActionPerformed(evt);
             }
         });
-        jPanel2.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 290, -1));
+        jPanel2.add(txtStudentID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 290, -1));
 
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
-        txtPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(99, 166, 211)));
-        txtPassword.setForeground(new java.awt.Color(102, 102, 102));
-        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPassword.setPlaceholder("Password");
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+        txtStudentPassword.setBackground(new java.awt.Color(255, 255, 255));
+        txtStudentPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(99, 166, 211)));
+        txtStudentPassword.setForeground(new java.awt.Color(102, 102, 102));
+        txtStudentPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtStudentPassword.setPlaceholder("Password");
+        txtStudentPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
+                txtStudentPasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 290, -1));
+        jPanel2.add(txtStudentPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 290, -1));
 
-        rSButtonHover2.setBackground(new java.awt.Color(99, 166, 211));
-        rSButtonHover2.setText("LOGIN");
-        rSButtonHover2.setColorHover(new java.awt.Color(51, 153, 255));
-        rSButtonHover2.setColorTextHover(new java.awt.Color(204, 204, 204));
-        rSButtonHover2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        rSButtonHover2.addActionListener(new java.awt.event.ActionListener() {
+        studentLoginButton.setBackground(new java.awt.Color(99, 166, 211));
+        studentLoginButton.setText("LOGIN");
+        studentLoginButton.setColorHover(new java.awt.Color(51, 153, 255));
+        studentLoginButton.setColorTextHover(new java.awt.Color(204, 204, 204));
+        studentLoginButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        studentLoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover2ActionPerformed(evt);
+                studentLoginButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(rSButtonHover2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 160, 30));
+        jPanel2.add(studentLoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 160, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
@@ -147,17 +160,17 @@ public class LoginPage extends javax.swing.JFrame{
         jLabel7.setFocusable(false);
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 340, 30));
 
-        rSButtonHover3.setBackground(new java.awt.Color(99, 166, 211));
-        rSButtonHover3.setText("SIGNUP");
-        rSButtonHover3.setColorHover(new java.awt.Color(51, 153, 255));
-        rSButtonHover3.setColorTextHover(new java.awt.Color(204, 204, 204));
-        rSButtonHover3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        rSButtonHover3.addActionListener(new java.awt.event.ActionListener() {
+        studentSignupButton.setBackground(new java.awt.Color(99, 166, 211));
+        studentSignupButton.setText("SIGNUP");
+        studentSignupButton.setColorHover(new java.awt.Color(51, 153, 255));
+        studentSignupButton.setColorTextHover(new java.awt.Color(204, 204, 204));
+        studentSignupButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        studentSignupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonHover3ActionPerformed(evt);
+                studentSignupButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(rSButtonHover3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 160, 30));
+        jPanel2.add(studentSignupButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 160, 30));
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -177,30 +190,31 @@ public class LoginPage extends javax.swing.JFrame{
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+    private void txtStudentIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
+    }//GEN-LAST:event_txtStudentIDActionPerformed
 
-    private void rSButtonHover2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover2ActionPerformed
+    private void studentLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLoginButtonActionPerformed
         if(validationLogin()){
             login();
+           System.out.println(getID()); 
         }
         
-    }//GEN-LAST:event_rSButtonHover2ActionPerformed
+    }//GEN-LAST:event_studentLoginButtonActionPerformed
 
-    private void rSButtonHover3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonHover3ActionPerformed
-         SingnupPage signupPage=new SingnupPage();
+    private void studentSignupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentSignupButtonActionPerformed
+         AdminSignUpPage signupPage=new AdminSignUpPage();
          signupPage.setVisible(true);
          this.dispose();
-    }//GEN-LAST:event_rSButtonHover3ActionPerformed
+    }//GEN-LAST:event_studentSignupButtonActionPerformed
 
-    private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
+    private void txtStudentIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStudentIDFocusLost
      
-    }//GEN-LAST:event_txtUsernameFocusLost
+    }//GEN-LAST:event_txtStudentIDFocusLost
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+    private void txtStudentPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
+    }//GEN-LAST:event_txtStudentPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,21 +233,30 @@ public class LoginPage extends javax.swing.JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(StudentLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginPage().setVisible(true);
+                new StudentLoginPage().setVisible(true);
+                StudentLoginPage sLoginPage=new StudentLoginPage();
+                
+                
             }
         });
     }
@@ -241,14 +264,14 @@ public class LoginPage extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover2;
-    private rojeru_san.complementos.RSButtonHover rSButtonHover3;
-    private app.bolivia.swing.JCTextField txtPassword;
-    private app.bolivia.swing.JCTextField txtUsername;
+    private rojeru_san.complementos.RSButtonHover studentLoginButton;
+    private javax.swing.JLabel studentLoginIcon;
+    private rojeru_san.complementos.RSButtonHover studentSignupButton;
+    public app.bolivia.swing.JCTextField txtStudentID;
+    private app.bolivia.swing.JCTextField txtStudentPassword;
     // End of variables declaration//GEN-END:variables
 }
